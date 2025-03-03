@@ -1,38 +1,70 @@
+import { FormEvent, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import CreatableSelect from "react-select/creatable";
-
-export const NNoteForm = () => {
+import { NoteData, Tag } from "../App";
+type NoteFormProps = {
+  onSubmit: (data: NoteData) => void;
+};
+export const NNoteForm = ({ onSubmit }: NoteFormProps) => {
+  const titleRef = useRef<HTMLInputElement>(null);
+  const markdownRef = useRef<HTMLTextAreaElement>(null);
+  const [selectedTags, setSelectedTags] = useState<Tag[]>([]);
+  const handleSubmi = (e: FormEvent) => {
+    e.preventDefault();
+    onSubmit({
+      title: titleRef.current!.value,
+      markdown: markdownRef.current!.value,
+      tags: [],
+    });
+  };
   return (
-    <div className="card w-full max-w-2xl bg-base-100 shadow-xl p-6">
-      <div className="card-body space-y-4">
-        <div className="form-control">
-          <label className="label">
-            <span className="badge badge-secondary text-lg">Title</span>
-          </label>
-          <input
-            type="text"
-            placeholder="Enter title..."
-            className="input input-bordered w-full"
-          />
-        </div>
-        <div className="form-control">
-          <label className="label">
-            <span className="badge badge-secondary text-lg">Tags</span>
-          </label>
-          <CreatableSelect isMulti className="w-full" />
-        </div>
-        <div className="form-control">
-          <label className="label">
-            <span className="badge badge-secondary text-lg">Body</span>
-          </label>
-          <textarea 
-            className="textarea textarea-bordered w-full h-40" 
-            placeholder="Write your note here..."
-          ></textarea>
-        </div>
-        <div className="card-actions justify-end mt-4">
-          <button className="btn btn-primary">Save</button>
-          <button className="btn btn-error">Cancel</button>
-        </div>
+    <div className="card w-full max-w-3xl bg-base-100 shadow-2xl rounded-2xl p-8">
+      <div className="card-body space-y-6">
+        <h2 className="text-2xl font-bold text-primary text-center">
+          Create a New Note
+        </h2>
+        <form className="space-y-4" onSubmit={handleSubmi}>
+          <div className="form-control">
+            <label className="label font-semibold text-lg">Title</label>
+            <input
+              type="text"
+              placeholder="Enter title..."
+              className="input input-bordered w-full"
+              ref={titleRef}
+            />
+          </div>
+          <div className="form-control">
+            <label className="label font-semibold text-lg">Tags</label>
+            <CreatableSelect
+              isMulti
+              className="w-full"
+              value={selectedTags.map((tag) => {
+                return { label: tag.label, id: tag.id };
+              })}
+              onChange={tags => {
+                setSelectedTags(tags.map(tag => {
+                  return {label:tag.label,id:tag.id}
+                }))
+              }}
+            />
+          </div>
+          <div className="form-control">
+            <label className="label font-semibold text-lg">Body</label>
+            <textarea
+              className="textarea textarea-bordered w-full h-48"
+              placeholder="Write your note here..."
+              ref={markdownRef}
+            ></textarea>
+          </div>
+          <div className="card-actions flex justify-between mt-6">
+            <Link to=".." className="btn btn-outline btn-error w-32">
+              Cancel
+            </Link>
+            <button type="submit" className="btn btn-primary w-32">
+              Save
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   );

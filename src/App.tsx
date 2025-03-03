@@ -1,6 +1,18 @@
 import { Navigate, Route, Routes } from "react-router-dom"
 import { NewNote } from "./page/NewNote"
-
+export type Note = {
+  id:string
+  & NoteData
+}
+export type NoteData = {
+  title:string
+  markdown:string
+  tags:Tag[]
+}
+export type Tag = {
+  id:string
+  label:string
+}
 const App = () => {
   return (
     <div className="container my-4">
