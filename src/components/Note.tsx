@@ -1,16 +1,19 @@
 import { ArrowRight, PenLine, Trash2 } from "lucide-react";
 import { useNote } from "../hooks/useNote";
 import { Link } from "react-router-dom";
-import   ReactMarkdown from "react-markdown";
+import ReactMarkdown from "react-markdown";
+
 export const Note = () => {
   const note = useNote();
+
   return (
     <>
+      {/* Header with title, tags, and buttons */}
       <div className="flex items-center justify-between mb-4">
-        <div className="">
+        <div>
           <h1 className="text-2xl font-bold">{note.title}</h1>
           {note.tags.length > 0 && (
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2 mt-2">
               {note.tags.map((tag) => (
                 <span
                   className="badge badge-accent px-3 py-1 text-sm"
@@ -22,32 +25,31 @@ export const Note = () => {
             </div>
           )}
         </div>
-        <div className="flex gap-2 mx-2">
+
+        {/* Action Buttons */}
+        <div className="flex gap-2">
           <Link to={`/${note.id}/edit`}>
-            <div className="">
-              <button className="btn  btn-primary capitalize">
-                edit <PenLine />
-              </button>
-            </div>
+            <button className="btn btn-primary capitalize flex items-center gap-1">
+              Edit <PenLine size={18} />
+            </button>
           </Link>
 
-          <div className="">
-            <button className="btn btn-outline btn-error capitalize">
-              delete <Trash2 />
-            </button>
-          </div>
+          <button className="btn btn-outline btn-error capitalize flex items-center gap-1">
+            Delete <Trash2 size={18} />
+          </button>
+
           <Link to={".."}>
-            <div className="">
-              <button className="btn btn-outline btn-accent capitalize">
-                back <ArrowRight />
-              </button>
-            </div>
+            <button className="btn btn-outline btn-accent capitalize flex items-center gap-1">
+              Back <ArrowRight size={18} />
+            </button>
           </Link>
         </div>
       </div>
-      <ReactMarkdown>
-        {note.markdown}
-      </ReactMarkdown>
+
+      {/* Markdown Content */}
+      <div className="prose max-w-none mt-4">
+        <ReactMarkdown>{note.markdown}</ReactMarkdown>
+      </div>
     </>
   );
 };

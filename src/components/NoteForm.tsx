@@ -8,16 +8,20 @@ type NoteFormProps = {
   onSubmit: (data: NoteData) => void;
   onAddTag: (tag: Tag) => void;
   availableTags: Tag[];
-};
+}& Partial <NoteData>;
 
 export const NNoteForm = ({
   onSubmit,
   onAddTag,
   availableTags,
+  title="",
+  markdown="",
+  tags=[]
+
 }: NoteFormProps) => {
   const titleRef = useRef<HTMLInputElement>(null);
   const markdownRef = useRef<HTMLTextAreaElement>(null);
-  const [selectedTags, setSelectedTags] = useState<Tag[]>([]);
+  const [selectedTags, setSelectedTags] = useState<Tag[]>(tags);
   const navigate = useNavigate();
 
   const handleSubmit = (e: FormEvent) => {
@@ -48,6 +52,9 @@ export const NNoteForm = ({
               placeholder="Enter title..."
               className="input input-bordered w-full"
               ref={titleRef}
+
+
+              defaultValue={title}
             />
           </div>
 
@@ -77,6 +84,7 @@ export const NNoteForm = ({
               className="textarea textarea-bordered w-full h-48"
               placeholder="Write your note here..."
               ref={markdownRef}
+              defaultValue={markdown}
             ></textarea>
           </div>
 
