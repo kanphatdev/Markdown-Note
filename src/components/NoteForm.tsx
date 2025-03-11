@@ -40,9 +40,7 @@ export const NNoteForm = ({
   return (
     <div className="card w-full max-w-3xl bg-base-100 shadow-2xl rounded-2xl p-8">
       <div className="card-body space-y-6">
-        <h2 className="text-2xl font-bold text-primary text-center">
-          Create a New Note
-        </h2>
+       
         <form className="space-y-4" onSubmit={handleSubmit}>
           {/* Title Input */}
           <div className="form-control">

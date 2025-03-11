@@ -17,9 +17,7 @@ export const EditNote = ({
   return (
     <div className="container mx-auto p-6 flex flex-col items-center">
       {/* Title */}
-      <h1 className="text-4xl font-bold capitalize mb-6 text-primary">
-        edit Note
-      </h1>
+
 
       {/* Form Component */}
       <div className="w-full max-w-3xl">

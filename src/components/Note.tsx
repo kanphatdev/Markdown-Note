@@ -1,11 +1,14 @@
 import { ArrowRight, PenLine, Trash2 } from "lucide-react";
 import { useNote } from "../hooks/useNote";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 
-export const Note = () => {
+type NoteProps = {
+  onDelete: (id: string) => void;
+};
+export const Note = ({ onDelete }: NoteProps) => {
   const note = useNote();
-
+  const navigate = useNavigate();
   return (
     <>
       {/* Header with title, tags, and buttons */}
@@ -34,7 +37,13 @@ export const Note = () => {
             </button>
           </Link>
 
-          <button className="btn btn-outline btn-error capitalize flex items-center gap-1">
+          <button
+            className="btn btn-outline btn-error capitalize flex items-center gap-1"
+            onClick={() => {
+              onDelete(note.id);
+              navigate("..");
+            }}
+          >
             Delete <Trash2 size={18} />
           </button>
 
